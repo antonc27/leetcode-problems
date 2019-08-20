@@ -35,6 +35,14 @@
  */
 object Solution {
     def reverseList(head: ListNode): ListNode = {
-        
+    	def reverseListRec(curr: ListNode, reversed: ListNode): ListNode = curr match {
+	    case null => reversed
+	    case _ => {
+	    	 var node = new ListNode(curr.x)
+		 node.next = reversed
+		 reverseListRec(curr.next, node)
+	    }
+	}
+	reverseListRec(head, null)
     }
 }
