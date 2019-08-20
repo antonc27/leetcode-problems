@@ -35,18 +35,24 @@
  */
 object Solution {
     def reverseList(head: ListNode): ListNode = {
-	//reverseListRec(head, null)
-	reverseListIter(head)
+	reverseListRec(head, null)
+	//reverseListIter(head)
     }
 
-    def reverseListRec(curr: ListNode, reversed: ListNode): ListNode = curr match {
-	    case null => reversed
-	    case _ => {
-	    	 var node = new ListNode(curr.x)
-		 node.next = reversed
-		 reverseListRec(curr.next, node)
-	    }
+    def reverseListRec(curr: ListNode, reversed: ListNode): ListNode = {
+    	if (curr == null) {
+	    reversed
+	} else if (curr.next == null) {
+	    curr.next = reversed
+	    curr
+	} else {
+	    val currTail = curr.next.next
+	    curr.next.next = curr
+	    val headReversed = curr.next
+	    curr.next = reversed
+	    reverseListRec(currTail, headReversed)
 	}
+    }
 
     def reverseListIter(head: ListNode): ListNode = {
     	var curr: ListNode = head
