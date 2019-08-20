@@ -52,10 +52,10 @@ object Solution {
     	var curr: ListNode = head
 	var reversed: ListNode = null
 	while (curr != null) {
-	    var node = new ListNode(curr.x)
-	    node.next = reversed
-	    reversed = node
-	    curr = curr.next
+	    var node = curr.next
+	    curr.next = reversed
+	    reversed = curr
+	    curr = node
 	}
 	reversed
     }
