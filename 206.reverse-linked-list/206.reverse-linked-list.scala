@@ -35,7 +35,11 @@
  */
 object Solution {
     def reverseList(head: ListNode): ListNode = {
-    	def reverseListRec(curr: ListNode, reversed: ListNode): ListNode = curr match {
+	//reverseListRec(head, null)
+	reverseListIter(head)
+    }
+
+    def reverseListRec(curr: ListNode, reversed: ListNode): ListNode = curr match {
 	    case null => reversed
 	    case _ => {
 	    	 var node = new ListNode(curr.x)
@@ -43,6 +47,17 @@ object Solution {
 		 reverseListRec(curr.next, node)
 	    }
 	}
-	reverseListRec(head, null)
+
+    def reverseListIter(head: ListNode): ListNode = {
+    	var curr: ListNode = head
+	var reversed: ListNode = null
+	while (curr != null) {
+	    var node = new ListNode(curr.x)
+	    node.next = reversed
+	    reversed = node
+	    curr = curr.next
+	}
+	reversed
     }
 }
+
