@@ -29,6 +29,15 @@
  */
 object Solution {
     def twoSum(nums: Array[Int], target: Int): Array[Int] = {
-        
+    	def twoSumRec(numsList: List[Int], index: Int, map: Map[Int, Int]): Array[Int] = numsList match {
+	    case Nil => Array()
+	    case n :: ns => if (map.contains(n)) {
+	    	 Array(map(n), index)
+	    } else {
+	         val newMap = map + (target - n -> index)
+		 twoSumRec(ns, index + 1, newMap)
+	    }
+	}
+	twoSumRec(nums.toList, 0, Map())
     }
 }
