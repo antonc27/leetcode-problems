@@ -30,6 +30,42 @@
  */
 object Solution {
     def maxSubArray(nums: Array[Int]): Int = {
-        
+    	dac(nums, 0, nums.length - 1)
     }
+
+    def dac(nums: Array[Int], left: Int, right: Int): Int = {
+    	if (left == right) {
+	   nums(left)
+	} else {
+	  val mid = (left + right) / 2
+	  val maxLeft = dac(nums, left, mid)
+	  val maxRight = dac(nums, mid+1, right)
+
+	  def growLeft(currIdx: Int, currSum: Int): Int = {
+	      if (currIdx < left) {
+	      	currSum
+	      } else {
+	      	val sum = nums(currIdx) + currSum
+		val recSum = growLeft(currIdx-1, sum)
+		max(currSum, sum, recSum)
+	      }
+	  }
+
+	  def growRight(currIdx: Int, currSum: Int): Int = {
+	      if (currIdx > right) {
+	      	currSum
+	      } else {
+	      	val sum = nums(currIdx) + currSum
+		val recSum = growRight(currIdx+1, sum)
+		max(currSum, sum, recSum)
+	      }
+	  }
+	  
+	  val maxComb = growLeft(mid-1, nums(mid)) + growRight(mid+2, nums(mid+1))
+
+	  max(maxLeft, maxRight, maxComb)
+	}
+    }
+
+    def max(a: Int, b: Int, c: Int) = math.max(math.max(a,b),c)
 }
