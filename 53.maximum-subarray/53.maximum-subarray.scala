@@ -30,7 +30,19 @@
  */
 object Solution {
     def maxSubArray(nums: Array[Int]): Int = {
-    	dac(nums, 0, nums.length - 1)
+    	//dac(nums, 0, nums.length - 1)
+
+	val initSum = nums(0)
+	val list = nums.slice(1, nums.length).toList
+	linear(list, initSum, initSum)
+    }
+
+    def linear(nums: List[Int], sumIn: Int, sumLeft: Int): Int = nums match {
+    	case Nil => sumIn
+	case x :: xs => {
+	     val newSumLeft = math.max(x, sumLeft + x)
+	     linear(xs, math.max(sumIn, newSumLeft), newSumLeft)
+	}
     }
 
     def dac(nums: Array[Int], left: Int, right: Int): Int = {
