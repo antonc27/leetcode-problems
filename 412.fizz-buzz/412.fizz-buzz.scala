@@ -45,6 +45,16 @@
  */
 object Solution {
     def fizzBuzz(n: Int): List[String] = {
-        
-    }
+        (for {
+            i <- 1 to n
+        } yield if (i % 15 == 0) {
+                "FizzBuzz"
+            } else if (i % 5 == 0) {
+                "Buzz"
+            } else if (i % 3 == 0) {
+                "Fizz"
+            } else {
+                i.toString
+            }).toList
 }
+    }
