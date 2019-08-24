@@ -30,6 +30,30 @@
  */
 object Solution {
     def mergeTwoLists(l1: ListNode, l2: ListNode): ListNode = {
-        
+        def mergeRec(list1: ListNode, list2: ListNode, start: ListNode, end: ListNode): ListNode = {
+	    (list1, list2) match {
+	    	 case (null, null) => start
+		 case (l, null) => append(start, end, l)
+		 case (null, l) => append(start, end, l)
+		 case (l1, l2) => if (l1.x <= l2.x) {
+		     val l1Next = l1.next
+		     l1.next = null
+		     val newStart = append(start, end, l1)
+		     mergeRec(l1Next, l2, newStart, l1)
+		 } else {
+		     mergeRec(l2, l1, start, end)
+		 }
+	    }
+	}
+	mergeRec(l1, l2, null, null)
+    }
+
+    def append(start: ListNode, end: ListNode, appendee: ListNode) = {
+    	if (end == null) {
+	   appendee
+	} else {
+	   end.next = appendee
+	   start
+	}
     }
 }
