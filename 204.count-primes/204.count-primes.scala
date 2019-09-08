@@ -24,6 +24,12 @@
  */
 object Solution {
     def countPrimes(n: Int): Int = {
+        var nums = (2 until n).toList
         
+        for(i <- 2 to math.sqrt(n).toInt) {
+            nums = nums.filter(j => !(j > i && j % i == 0))
+            }
+        
+        nums.length
     }
 }
