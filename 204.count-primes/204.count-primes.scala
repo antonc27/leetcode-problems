@@ -24,12 +24,25 @@
  */
 object Solution {
     def countPrimes(n: Int): Int = {
-        var nums = (2 until n).toList
+    	if (n == 0) return 0;
+	
+	var isPrime = Array.fill[Boolean](n)(true)
+	isPrime(0) = false
+	isPrime(n - 1) = false
+
+	var nextPrime = 2
+	while (nextPrime != 0 && nextPrime * nextPrime < n) {
+	    (nextPrime * nextPrime until n by nextPrime).foreach { p =>
+	         isPrime(p - 1) = false
+	    }
+	    val nextPrimeIdx = isPrime.drop(nextPrime).indexWhere(x => x)
+	    nextPrime = if (nextPrimeIdx == -1) {
+	    	0
+	    } else {
+	        nextPrime + nextPrimeIdx + 1
+	    }
+	}
         
-        for(i <- 2 to math.sqrt(n).toInt) {
-            nums = nums.filter(j => !(j > i && j % i == 0))
-            }
-        
-        nums.length
+	isPrime.count(x => x)
     }
 }
