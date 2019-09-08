@@ -6,9 +6,9 @@
  * https://leetcode.com/problems/happy-number/description/
  *
  * algorithms
- * Easy (46.17%)
- * Total Accepted:    256.5K
- * Total Submissions: 555K
+ * Easy (46.42%)
+ * Total Accepted:    261.9K
+ * Total Submissions: 564.2K
  * Testcase Example:  '19'
  *
  * Write an algorithm to determine if a number is "happy".
@@ -33,6 +33,27 @@
  */
 object Solution {
     def isHappy(n: Int): Boolean = {
-        
+        def happy(n: Int, cycle: Set[Int]): Boolean = {
+        if (n > 999) {
+            happy(squareDigits(n), cycle)
+        } else if (n == 1) {
+            true
+        } else if (cycle.contains(n)) {
+            false
+        } else {
+            val next = squareDigits(n)
+            happy(next, cycle + n)
+        }
+    }
+        happy(n, Set())
+    }
+    
+    def squareDigits(a: Int): Int = {
+        if (a <= 9) {
+            a * a
+        } else {
+            val rem = a % 10
+            rem * rem + squareDigits(a / 10)
+        }
     }
 }
