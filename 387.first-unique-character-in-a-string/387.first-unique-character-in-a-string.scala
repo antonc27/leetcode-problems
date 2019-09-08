@@ -31,6 +31,24 @@
  */
 object Solution {
     def firstUniqChar(s: String): Int = {
+        def buildMap(s: List[Char], map: Map[Char, Int]): Map[Char, Int] = s match {
+            case Nil => map
+            case c :: xc => 
+                buildMap(xc, map updated (c, map.getOrElse(c, 0) + 1))
+        }
         
+        val map = buildMap(s.toList, Map())
+        
+        def find(s: List[Char], index: Int): Int = s match {
+            case Nil => -1
+            case c :: xc =>
+                if (map(c) == 1) {
+                    index
+                } else {
+                    find(xc, index + 1)
+                }
+        }
+        
+        find(s.toList, 0)
     }
 }
