@@ -60,6 +60,18 @@
  */
 object Solution {
     def pivotIndex(nums: Array[Int]): Int = {
-        
+        val total = nums.foldLeft(0)(_ + _)
+        def find(nums: List[Int], leftSum: Int, index: Int): Int = nums match {
+            case Nil => -1
+            case n :: ns => {
+                val rightSum = total - n - leftSum
+                if (leftSum == rightSum) {
+                    index
+                } else {
+                    find(ns, leftSum + n, index + 1)
+                }
+            }
+        }
+        find(nums.toList, 0, 0)
     }
 }
