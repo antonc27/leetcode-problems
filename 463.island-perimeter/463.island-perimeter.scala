@@ -44,6 +44,23 @@
  */
 object Solution {
     def islandPerimeter(grid: Array[Array[Int]]): Int = {
+        val n = grid.length
+        if (n == 0) return 0
         
+        val m = grid(0).length
+        
+        def isInBounds(i: Int, j: Int): Boolean = 0 <= i && i < n && 0 <= j && j < m
+        
+        def isZero(i: Int, j: Int): Boolean = !isInBounds(i, j) || grid(i)(j) == 0
+        
+        def countPerim(i: Int, j: Int): Int = {
+            (for (p <- -1 to 1; q <- -1 to 1 if p != q && p != -q)
+                yield isZero(i + p, j + q)
+            ).count(x => x)
+        }
+        
+        (for (i <- 0 until n; j <- 0 until m if grid(i)(j) == 1)
+            yield countPerim(i, j)
+        ).sum
     }
 }
