@@ -43,6 +43,31 @@
  */
 class Solution {
     public int reverse(int x) {
+        if (x == -2147483648) {
+            return 0;
+        }
         
+        if (x < 0) {
+            return -reverse(-x);
+        }
+        
+        int reverse = 0;
+        int rem = 0;
+        int tmp = 0;
+        while (x > 0) {
+            rem = x % 10;
+            if (reverse != 0) {
+                tmp = reverse * 10;
+                // check overflow
+                if (tmp/10 != reverse) return 0;
+                reverse = tmp;
+            }
+            tmp = reverse + rem;
+            // check overflow
+            if (tmp-rem != reverse) return 0;
+            reverse = tmp;
+            x /= 10;
+        }
+        return reverse;
     }
 }
